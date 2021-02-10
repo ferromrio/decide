@@ -1,39 +1,41 @@
 dist: xenial
-
 services:
-  - postgresql
+- postgresql
 addons:
-  postgresql: "9.4"
+  postgresql: '9.4'
   chrome: stable
 before_script:
-  - psql -U postgres -c "create user decide password 'decide'"
-  - psql -U postgres -c "create database test_decide owner decide"
-  - psql -U postgres -c "ALTER USER decide CREATEDB"
-  - CHROME_MAIN_VERSION=`google-chrome-stable --version | sed -E 's/(^Google Chrome |\.[0-9]+ )//g'`
-  - CHROMEDRIVER_VERSION=`curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_MAIN_VERSION"`
-  - curl "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" -O
-  - unzip chromedriver_linux64.zip -d ~/bin
+- psql -U postgres -c "create user decide password 'decide'"
+- psql -U postgres -c "create database test_decide owner decide"
+- psql -U postgres -c "ALTER USER decide CREATEDB"
+- CHROME_MAIN_VERSION=`google-chrome-stable --version | sed -E 's/(^Google Chrome
+  |\.[0-9]+ )//g'`
+- CHROMEDRIVER_VERSION=`curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_MAIN_VERSION"`
+- curl "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+  -O
+- unzip chromedriver_linux64.zip -d ~/bin
 language: python
 python:
-  - "3.6"
+- '3.6'
 install:
-  - wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz
-  - tar -xzf geckodriver-v0.27.0-linux64.tar.gz
-  - chmod +x geckodriver
-  - sudo cp geckodriver /usr/bin/
-  - pip install -r requirements.txt
-  - pip install codacy-coverage
+- wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz
+- tar -xzf geckodriver-v0.27.0-linux64.tar.gz
+- chmod +x geckodriver
+- sudo cp geckodriver /usr/bin/
+- pip install -r requirements.txt
+- pip install codacy-coverage
 script:
-  - cd decide
-  - cp travis_local_settings.py local_settings.py
-  - cd decide
-  - cp travis_settings.py settings.py
-  - cd ..
-  - coverage run --branch --source=. ./manage.py test --keepdb
-  - coverage xml
-  - python-codacy-coverage -r coverage.xml
+- cd decide
+- cp travis_local_settings.py local_settings.py
+- cd decide
+- cp travis_settings.py settings.py
+- cd ..
+- coverage run --branch --source=. ./manage.py test --keepdb
+- coverage xml
+- python-codacy-coverage -r coverage.xml
 deploy:
   provider: heroku
   app: egc-prueba-frr
   strategy: git
-  api_key: $HEROKU_AUTH_TOKEN
+  api_key:
+    secure: aZYMTMurXXhdRrPKV9px2uVrSZLz2S/k4rc/NgeOtMqbR8pmHQGlCl/L0Dq/0fb8Grgw1VgtYqf4XKBq+N+boYHZMHZUNn4XWEPmHt17O45Ob6JrA80hj/mhwITK0gOACoeM7LweQkrVYn3h8VixXZg2xhCogP0a4aDISNe/JsF42Pb+Bn34/iqgOGn5NtK+ZZl8AuFkIZunca6FLdkpZw9hwQYECAftOSaBmPnYreZm2uSu5JaMcgJgwNaNZRHLYSddpYDrONztgC6WbK7BJQTO5sBdb9GeIBGiZXEbT4UloYOrziMGM0s0us3Em9mxe1U3hD3Gl946GSQZP5itCEy/xVnQ9vskhjn0OAAMqtw2JcZMw1TflOpJE6bekhu8iT0WHZBUoNUPbHfawewOYBXWqHN7r1oTGWRhiWD44NVnT4CjODA82PS/JWvc6Cy5UiJQxbWKapDgiTtqpA7gdR9lGbphhYE4nlRYIPVqerfYA17pVa8Ho9FhapZkJDg5MIy4QxirX2bf/iCWxzjeggzyxticir/jUyCBhaj1VxlMdS6twPi7Tba22C27Wu9quWezLl6Pr5H8eA6G+CdxTXhKenWWyOKdhDlCFbqMXwSj5n1iFmvD2dw9c5ojxrWcPwElR3ta8gvcpQ/g3Tc1U0G7OoXUpXIDSekvxmSl3oI=
