@@ -28,3 +28,8 @@ script:
   - coverage run --branch --source=. ./manage.py test --keepdb
   - coverage xml
   - python-codacy-coverage -r coverage.xml
+deploy:
+  provider: heroku
+  app: egc-prueba-frr
+  strategy: git
+  api_key: $HEROKU_AUTH_TOKEN
