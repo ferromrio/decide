@@ -1,6 +1,9 @@
 dist: xenial
 services:
 - postgresql
+branches:
+  only:
+    - master
 addons:
   postgresql: '9.4'
   chrome: stable
@@ -39,3 +42,5 @@ deploy:
   strategy: git
   api_key:
     secure: aZYMTMurXXhdRrPKV9px2uVrSZLz2S/k4rc/NgeOtMqbR8pmHQGlCl/L0Dq/0fb8Grgw1VgtYqf4XKBq+N+boYHZMHZUNn4XWEPmHt17O45Ob6JrA80hj/mhwITK0gOACoeM7LweQkrVYn3h8VixXZg2xhCogP0a4aDISNe/JsF42Pb+Bn34/iqgOGn5NtK+ZZl8AuFkIZunca6FLdkpZw9hwQYECAftOSaBmPnYreZm2uSu5JaMcgJgwNaNZRHLYSddpYDrONztgC6WbK7BJQTO5sBdb9GeIBGiZXEbT4UloYOrziMGM0s0us3Em9mxe1U3hD3Gl946GSQZP5itCEy/xVnQ9vskhjn0OAAMqtw2JcZMw1TflOpJE6bekhu8iT0WHZBUoNUPbHfawewOYBXWqHN7r1oTGWRhiWD44NVnT4CjODA82PS/JWvc6Cy5UiJQxbWKapDgiTtqpA7gdR9lGbphhYE4nlRYIPVqerfYA17pVa8Ho9FhapZkJDg5MIy4QxirX2bf/iCWxzjeggzyxticir/jUyCBhaj1VxlMdS6twPi7Tba22C27Wu9quWezLl6Pr5H8eA6G+CdxTXhKenWWyOKdhDlCFbqMXwSj5n1iFmvD2dw9c5ojxrWcPwElR3ta8gvcpQ/g3Tc1U0G7OoXUpXIDSekvxmSl3oI=
+  on:
+    branches: master
